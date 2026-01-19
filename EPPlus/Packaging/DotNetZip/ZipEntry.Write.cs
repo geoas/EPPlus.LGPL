@@ -530,31 +530,6 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         }
 
 
-
-        // private System.Text.Encoding GenerateCommentBytes()
-        // {
-        //     var getEncoding = new Func<System.Text.Encoding>({
-        //     switch (AlternateEncodingUsage)
-        //     {
-        //         case ZipOption.Always:
-        //             return AlternateEncoding;
-        //         case ZipOption.Never:
-        //             return ibm437;
-        //     }
-        //     var cb = ibm437.GetBytes(_Comment);
-        //     // need to use this form of GetString() for .NET CF
-        //     string s1 = ibm437.GetString(cb, 0, cb.Length);
-        //     if (s1 == _Comment)
-        //         return ibm437;
-        //     return AlternateEncoding;
-        //     });
-        //
-        //     var encoding = getEncoding();
-        //     _CommentBytes = encoding.GetBytes(_Comment);
-        //     return encoding;
-        // }
-
-
         private string NormalizeFileName()
         {
             // here, we need to flip the backslashes to forward-slashes,
@@ -2459,7 +2434,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                     int size = 16;
                     if (_InputUsesZip64) size += 8;
                     byte[] Descriptor = new byte[size];
-                    input.Read(Descriptor, 0, size);
+                    var r = input.Read(Descriptor, 0, size);
 
                     if (_InputUsesZip64 && _container.UseZip64WhenSaving == Zip64Option.Never)
                     {

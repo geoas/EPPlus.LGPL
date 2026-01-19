@@ -25,7 +25,10 @@
 // ------------------------------------------------------------------
 
 
+using OfficeOpenXml.Utils;
+
 using System;
+using System.IO;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zlib
 {
@@ -377,7 +380,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
             }
             set
             {
-            if (_disposed) throw new ObjectDisposedException("DeflateStream");
+                if (_disposed) throw new ObjectDisposedException("DeflateStream");
                 this._baseStream.Strategy = value;
             }
         }
@@ -642,7 +645,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>The string in compressed form</returns>
         public static byte[] CompressString(String s)
         {
-            using (var ms = new System.IO.MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 System.IO.Stream compressor =
                     new DeflateStream(ms, CompressionMode.Compress, CompressionLevel.BestCompression);
@@ -672,10 +675,10 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>The data in compressed form</returns>
         public static byte[] CompressBuffer(byte[] b)
         {
-            using (var ms = new System.IO.MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 System.IO.Stream compressor =
-                    new DeflateStream( ms, CompressionMode.Compress, CompressionLevel.BestCompression );
+                    new DeflateStream(ms, CompressionMode.Compress, CompressionLevel.BestCompression);
 
                 ZlibBaseStream.CompressBuffer(b, compressor);
                 return ms.ToArray();
@@ -699,7 +702,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>The uncompressed string</returns>
         public static String UncompressString(byte[] compressed)
         {
-            using (var input = new System.IO.MemoryStream(compressed))
+            using (var input = new MemoryStream(compressed))
             {
                 System.IO.Stream decompressor =
                     new DeflateStream(input, CompressionMode.Decompress);
@@ -725,10 +728,10 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>The data in uncompressed form</returns>
         public static byte[] UncompressBuffer(byte[] compressed)
         {
-            using (var input = new System.IO.MemoryStream(compressed))
+            using (var input = new MemoryStream(compressed))
             {
                 System.IO.Stream decompressor =
-                    new DeflateStream( input, CompressionMode.Decompress );
+                    new DeflateStream(input, CompressionMode.Decompress);
 
                 return ZlibBaseStream.UncompressBuffer(compressed, decompressor);
             }

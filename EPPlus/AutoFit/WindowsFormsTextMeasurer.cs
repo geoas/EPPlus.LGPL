@@ -32,7 +32,7 @@ using System.Drawing;
 namespace OfficeOpenXml.AutoFit
 {
     /// <summary>
-    /// Measures text using the Windows Forms <see cref="Graphics.MeasureString(string?, Font, int, StringFormat?)">Graphics.MeasureString</see> method.
+    /// Measures text using the Windows Forms <see cref="Graphics.MeasureString(string, Font, int, StringFormat)">Graphics.MeasureString</see> method.
     /// </summary>
 #if NET6_0_OR_GREATER
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
@@ -92,7 +92,7 @@ namespace OfficeOpenXml.AutoFit
             }
 
             public FontInfo(string name, float size, bool bold, bool italic, bool underline, bool strikeout)
-                : this(name, size, FontStyle.Regular 
+                : this(name, size, FontStyle.Regular
                       | (bold ? FontStyle.Bold : 0)
                       | (italic ? FontStyle.Italic : 0)
                       | (underline ? FontStyle.Underline : 0)

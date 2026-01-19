@@ -28,12 +28,9 @@
  *******************************************************************************
  * Jan Källman		Added		25-Oct-2012
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using OfficeOpenXml.Packaging.Ionic.Zip;
+using System;
+using System.IO;
 
 namespace OfficeOpenXml.Packaging
 {
@@ -95,7 +92,7 @@ namespace OfficeOpenXml.Packaging
             }
             else
             {
-                _stream.Seek(0, SeekOrigin.Begin);                
+                _stream.Seek(0, SeekOrigin.Begin);
             }
             return _stream;
         }
@@ -142,7 +139,7 @@ namespace OfficeOpenXml.Packaging
                 {
                     return;
                 }
-                os.CompressionLevel = (OfficeOpenXml.Packaging.Ionic.Zlib.CompressionLevel)CompressionLevel;
+                os.CompressionLevel = (Ionic.Zlib.CompressionLevel)CompressionLevel;
                 os.PutNextEntry(Uri.OriginalString);
                 os.Write(b, 0, b.Length);
             }

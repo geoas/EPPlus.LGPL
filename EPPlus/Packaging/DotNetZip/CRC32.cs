@@ -657,11 +657,6 @@ namespace OfficeOpenXml.Packaging.Ionic.Crc
         ///   Indicates whether the underlying stream will be left open when the
         ///   <c>CrcCalculatorStream</c> is Closed.
         /// </summary>
-        /// <remarks>
-        ///   <para>
-        ///     Set this at any point before calling <see cref="Close()"/>.
-        ///   </para>
-        /// </remarks>
         public bool LeaveOpen
         {
             get { return _leaveOpen; }
@@ -807,11 +802,6 @@ namespace OfficeOpenXml.Packaging.Ionic.Crc
             base.Close();
             if (!_leaveOpen)
                 _innerStream.Close();
-        }
-#else
-        public override void Close()
-        {
-            base.Close();
         }
 #endif
     }

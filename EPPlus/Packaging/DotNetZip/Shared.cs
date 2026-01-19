@@ -123,7 +123,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
         private static string SimplifyFwdSlashPath(string path)
         {
-            if (path.StartsWith("./")) path = path.Substring(2);
+            if (path.StartsWith("./", StringComparison.OrdinalIgnoreCase)) path = path.Substring(2);
             path = path.Replace("/./", "/");
 
             // Replace foo/anything/../bar with foo/bar
@@ -152,7 +152,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             pathName = pathName.Replace('\\', '/');
 
             // trim all leading slashes
-            while (pathName.StartsWith("/")) pathName = pathName.Substring(1);
+            while (pathName.StartsWith("/", StringComparison.OrdinalIgnoreCase)) pathName = pathName.Substring(1);
 
             return SimplifyFwdSlashPath(pathName);
         }
@@ -310,41 +310,42 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         {
             long startingPosition = stream.Position;
 
-            int BATCH_SIZE = 65536; //  8192;
+            int BATCH_SIZE = 65536;
             byte[] targetBytes = new byte[4];
             targetBytes[0] = (byte)(SignatureToFind >> 24);
             targetBytes[1] = (byte)((SignatureToFind & 0x00FF0000) >> 16);
             targetBytes[2] = (byte)((SignatureToFind & 0x0000FF00) >> 8);
             targetBytes[3] = (byte)(SignatureToFind & 0x000000FF);
             byte[] batch = new byte[BATCH_SIZE];
-            int n = 0;
             bool success = false;
             do
             {
-                n = stream.Read(batch, 0, batch.Length);
+                int n = stream.Read(batch, 0, batch.Length);
                 if (n != 0)
                 {
                     for (int i = 0; i < n; i++)
                     {
                         if (batch[i] == targetBytes[3])
                         {
-                            long curPosition = stream.Position;
-                            stream.Seek(i - n, System.IO.SeekOrigin.Current);
-                            // workitem 10178
-                            Workaround_Ladybug318918(stream);
-
-                            // workitem 7711
-                            int sig = ReadSignature(stream);
-
-                            success = (sig == SignatureToFind);
-                            if (!success)
+                            if (i >= BATCH_SIZE - 4)
                             {
-                                stream.Seek(curPosition, System.IO.SeekOrigin.Begin);
+                                stream.Seek(stream.Position - 4, System.IO.SeekOrigin.Begin);
                                 // workitem 10178
                                 Workaround_Ladybug318918(stream);
+                                break;
+                            }
+                            else if (batch[i + 1] == targetBytes[2] && batch[i + 2] == targetBytes[1] && batch[i + 3] == targetBytes[0])
+                            {
+                                stream.Seek(i - n + 4, System.IO.SeekOrigin.Current);
+                                Workaround_Ladybug318918(stream);
+                                success = true;
+                                break;
                             }
                             else
-                                break; // out of for loop
+                            {
+                                continue;
+                            }
+
                         }
                     }
                 }
@@ -405,7 +406,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         {
             // workitem 7074 & workitem 7170
             if (packedDateTime == 0xFFFF || packedDateTime == 0)
-                return new System.DateTime(1995, 1, 1, 0, 0, 0, 0);  // return a fixed date when none is supplied.
+                return new DateTime(1995, 1, 1, 0, 0, 0, 0);  // return a fixed date when none is supplied.
 
             Int16 packedTime = unchecked((Int16)(packedDateTime & 0x0000ffff));
             Int16 packedDate = unchecked((Int16)((packedDateTime & 0xffff0000) >> 16));
@@ -425,11 +426,11 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             if (minute >= 60) { hour++; minute = 0; }
             if (hour >= 24) { day++; hour = 0; }
 
-            DateTime d = System.DateTime.Now;
+            DateTime d = DateTime.Now;
             bool success= false;
             try
             {
-                d = new System.DateTime(year, month, day, hour, minute, second, 0);
+                d = new DateTime(year, month, day, hour, minute, second, 0);
                 success= true;
             }
             catch (System.ArgumentOutOfRangeException)
@@ -438,14 +439,14 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                 {
                     try
                     {
-                        d = new System.DateTime(1980, 1, 1, hour, minute, second, 0);
+                        d = new DateTime(1980, 1, 1, hour, minute, second, 0);
                 success= true;
                     }
                     catch (System.ArgumentOutOfRangeException)
                     {
                         try
                         {
-                            d = new System.DateTime(1980, 1, 1, 0, 0, 0, 0);
+                            d = new DateTime(1980, 1, 1, 0, 0, 0, 0);
                 success= true;
                         }
                         catch (System.ArgumentOutOfRangeException) { }
@@ -469,7 +470,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                         while (minute > 59) minute--;
                         while (second < 0) second++;
                         while (second > 59) second--;
-                        d = new System.DateTime(year, month, day, hour, minute, second, 0);
+                        d = new DateTime(year, month, day, hour, minute, second, 0);
                         success= true;
                     }
                     catch (System.ArgumentOutOfRangeException) { }
@@ -663,10 +664,10 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         // generates the JIT-compile time exception.
         //
 #endif
-        private static uint _HRForException(System.Exception ex1)
-        {
-            return unchecked((uint)System.Runtime.InteropServices.Marshal.GetHRForException(ex1));
-        }
+        //private static uint _HRForException(System.Exception ex1)
+        //{
+        //    return unchecked((uint)System.Runtime.InteropServices.Marshal.GetHRForException(ex1));
+        //}
 
     }
 

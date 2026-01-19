@@ -1,115 +1,100 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;netcoreapp3.1;net35;net40;net6.0;net8.0</TargetFrameworks>
-    <VersionPrefix>4.5.4-preview</VersionPrefix>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<PackageIcon>icon.jpg</PackageIcon>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/Shane32/EPPlus</PackageProjectUrl>
-    <Authors>Jan Källman, Mats Alm, Shane Krueger</Authors>
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <Company></Company>
-    <Product>EPPlus LGPL Edition</Product>
-	<Title>Updated Version of EPPlus 4.5.3.3</Title>
-    <Description>EPPlus-LGPL is an unofficial EPPlus library which includes bug fixes beyond EPPlus 4.5.3.3 including support for .NET 6+.</Description>
-    <AssemblyName>EPPlus-LGPL</AssemblyName>
-    <RootNamespace>OfficeOpenXml</RootNamespace>
-    <RepositoryUrl></RepositoryUrl>
-    <PackageTags>EPPlus Excel Spreadsheet xlsx ooxml</PackageTags>
-    <Copyright>Copyright (c) 2011 Jan Källman, et al</Copyright>
-	<DebugType>embedded</DebugType>
-    <PackageReleaseNotes>
-		4.5.3.13
-		* Fix compatibility with ASP.NET Core 2.1
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1;netstandard2.0;net472;net10.0</TargetFrameworks>
+		<VersionPrefix>4.5.3.14</VersionPrefix>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageIcon>icon.jpg</PackageIcon>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/geoas/EPPlus.LGPL</PackageProjectUrl>
+		<Authors>Jan Källman, Mats Alm, Shane Krueger</Authors>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<Company></Company>
+		<Product>EPPlus LGPL Edition</Product>
+		<Title>Updated Version of EPPlus 4.5.3.3</Title>
+		<Description>EPPlus-LGPL is an unofficial EPPlus library which includes bug fixes beyond EPPlus 4.5.3.3.</Description>
+		<AssemblyName>EPPlus.LGPL</AssemblyName>
+		<RootNamespace>OfficeOpenXml</RootNamespace>
+		<RepositoryUrl></RepositoryUrl>
+		<PackageTags>EPPlus Excel Spreadsheet xlsx ooxml</PackageTags>
+		<Copyright>Copyright (c) 2026 Jan Källman, et al</Copyright>
+		<DebugType>embedded</DebugType>
+		<PackageReleaseNotes>
+			4.5.3.14
+			* added .net472 and .net10.0 targets
+			* removed netcoreapp3.1, net35 and net6.0	 targets
 
-		4.5.3.11
-		* Added support for AutoFit on .NET 6+ on Linux using font metrics collected from a Windows PC
+			4.5.3.13
+			* Fix compatibility with ASP.NET Core 2.1
 
-		4.5.3.10
-		* Added additional compliation targets including .NET 6 and .NET 8; reduced dependencies
+			4.5.3.11
+			* Added support for AutoFit on .NET 6+ on Linux using font metrics collected from a Windows PC
 
-		4.5.3.9
-		* Fixed recalculating on .NET Framework; support Source Link debugging
+			4.5.3.10
+			* Added additional compliation targets including .NET 6 and .NET 8; reduced dependencies
 
-		4.5.3.8
-		* Fixed the bug of address of ExcelNamedRange in ExcelNamedRangeCollection and Cell of ExcelSparkline in ExcelNamedRangeCollection when inserting row or column in ExcelWorksheet.
+			4.5.3.9
+			* Fixed recalculating on .NET Framework; support Source Link debugging
 
-		4.5.3.7
-		* Modify ExcelSparkline to support named data range.
+			4.5.3.8
+			* Fixed the bug of address of ExcelNamedRange in ExcelNamedRangeCollection and Cell of ExcelSparkline in ExcelNamedRangeCollection when inserting row or column in ExcelWorksheet.
 
-		Changes in versions earlier than 4.5.3.3 see this link https://github.com/JanKallman/EPPlus/blob/master/EPPlus/readme.txt .
-	</PackageReleaseNotes>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>OpenOfficeXml.Shane32.snk</AssemblyOriginatorKeyFile>
-    <NeutralLanguage />
-    <PackageLicenseFile>lgpl-3.0.txt</PackageLicenseFile>
-	<NoWarn>$(NoWarn);CS1591</NoWarn>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<WarningsAsErrors>CA1416</WarningsAsErrors>
-  </PropertyGroup>
- 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1' OR '$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netcoreapp3.1' OR '$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'">
-    <DefineConstants>Core</DefineConstants>
-  </PropertyGroup>
+			4.5.3.7
+			* Modify ExcelSparkline to support named data range.
 
-  <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\EPPlusFree.xml</DocumentationFile>
-  </PropertyGroup>
+			Changes in versions earlier than 4.5.3.3 see this link https://github.com/JanKallman/EPPlus/blob/master/EPPlus/readme.txt .
+		</PackageReleaseNotes>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>OpenOfficeXml.Shane32.snk</AssemblyOriginatorKeyFile>
+		<NeutralLanguage />
+		<PackageLicenseFile>lgpl-3.0.txt</PackageLicenseFile>
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<WarningsAsErrors>CA1416</WarningsAsErrors>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Packaging\DotNetZip\ZipFile.SaveSelfExtractor.cs" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1' OR '$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'net10.0'">
+		<DefineConstants>Core</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<DefineConstants>Core;Core10</DefineConstants>
+	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\EPPlusFree.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net35'">
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40' OR '$(TargetFramework)' == 'net35'">
-    <Reference Include="PresentationCore" />
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.3" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="4.5.2" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.32" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.3" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="4.7.0" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="6.0.4" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="AutoFit\TextMeasurements.dat" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AutoFit\TextMeasurements.dat" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="../README.md" Pack="true" PackagePath="" />
-    <None Include="lgpl-3.0.txt" Pack="true" Visible="false" PackagePath="" />
-	<None Include="icon.jpg" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+		<Reference Include="PresentationCore" />
+		<Reference Include="System" />
+		<Reference Include="System.configuration" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Security" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.2" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.2" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.2" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="AutoFit\TextMeasurements.dat" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="AutoFit\TextMeasurements.dat" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="../README.md" Pack="true" PackagePath="" />
+		<None Include="lgpl-3.0.txt" Pack="true" Visible="false" PackagePath="" />
+		<None Include="icon.jpg" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
 </Project>

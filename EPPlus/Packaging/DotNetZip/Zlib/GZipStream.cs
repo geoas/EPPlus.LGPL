@@ -27,6 +27,8 @@
 // ------------------------------------------------------------------
 
 
+using OfficeOpenXml.Utils;
+
 using System;
 using System.IO;
 
@@ -185,13 +187,13 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
                 _FileName = value;
                 if (_FileName == null) return;
-                if (_FileName.IndexOf("/") != -1)
+                if (_FileName.IndexOf("/", StringComparison.OrdinalIgnoreCase) != -1)
                 {
                     _FileName = _FileName.Replace("/", "\\");
                 }
                 if (_FileName.EndsWith("\\"))
                     throw new Exception("Illegal filename");
-                if (_FileName.IndexOf("\\") != -1)
+                if (_FileName.IndexOf("\\", StringComparison.OrdinalIgnoreCase) != -1)
                 {
                     // trim any leading path
                     _FileName = Path.GetFileName(_FileName);
@@ -852,7 +854,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         #endregion
 
 
-        internal static readonly System.DateTime _unixEpoch = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        internal static readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 #if SILVERLIGHT || NETCF
         internal static readonly System.Text.Encoding iso8859dash1 = new Ionic.Encoding.Iso8859Dash1Encoding();
 #else
@@ -1019,7 +1021,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>The data in uncompressed form</returns>
         public static byte[] UncompressBuffer(byte[] compressed)
         {
-            using (var input = new System.IO.MemoryStream(compressed))
+            using (var input = new MemoryStream(compressed))
             {
                 System.IO.Stream decompressor =
                     new GZipStream( input, CompressionMode.Decompress );
